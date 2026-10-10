@@ -43,3 +43,14 @@ def fetch_mod(url,tmt = 10):
 
 print(fetch_mod(BASE_URL))
 print(fetch_mod(BASE_URL, 3))
+print("--------------")
+
+# Exercitiul 24
+def get_title(html):
+    start = html.find("<title>") + len("<title>")
+    end = html.find("</title>")
+    title = html[start:end].strip()
+    return title
+
+response = requests.get(BASE_URL, timeout=TIMEOUT)
+print(get_title(response.text))
