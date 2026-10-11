@@ -101,14 +101,17 @@ def get_header(url, name , default = "Lipseste"):
 get_header(BASE_URL, name = "Server")
 print("---------30----------")
 
+def security_headers(url):
+    antete = ["Strict-Transport-Security", "X-Frame-Options",
+            "Content-Security-Policy", "X-Content-Type-Options","Referrer-Policy"]
+    resp = requests.get(url, timeout=TIMEOUT)
+    ant_dict = {}
+    for antet in antete:
+        get_ant = resp.headers.get(antet, False)
+        if get_ant:
+            ant_dict[antet] = True
+        else:
+            ant_dict[antet] = get_ant
+    print(ant_dict)
 
-
-
-
-
-
-
-
-
-
-
+security_headers(BASE_URL)
