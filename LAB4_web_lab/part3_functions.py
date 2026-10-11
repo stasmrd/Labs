@@ -113,5 +113,20 @@ def security_headers(url):
         else:
             ant_dict[antet] = get_ant
     print(ant_dict)
+    return ant_dict
 
 security_headers(BASE_URL)
+print("---------31----------")
+
+def score_headers(results):
+    count_true = 0
+    count_dict = len(results.keys())
+    for key, val in results.items():
+        if val: count_true += 1
+
+    sir = f"{count_true}/{count_dict}"
+    return sir
+
+result_sh = score_headers(security_headers(BASE_URL))
+print(result_sh)
+
