@@ -6,38 +6,33 @@ BASE_URL = "https://cybercor.org"
 ECHO_URL = "https://httpbin.org"
 TIMEOUT = 10 # secunde
 
-# Exercitiul 1
-
 import time
 import urllib.request
 import requests
 
-print("Versiunea requests: ", requests.__version__)
-print()
+print("--------------------")
 
-# Exercitiul 2
+print("Versiunea requests: ", requests.__version__)
+print("---------1----------")
 
 response1 = requests.get(BASE_URL, timeout=TIMEOUT)
 print("Codul de stare (Stil 1): ", response1.status_code)
-print()
+print("---------2----------")
 
 time.sleep(1)
 
 from requests import get 
 response2 = get(BASE_URL, timeout=TIMEOUT)
 print("Codul de stare (Stil 2): ", response2.status_code)
-print()
-
-# Exercitiul 3
+print("---------3----------")
 
 import requests as rq
 response3 = rq.get(BASE_URL, timeout=TIMEOUT)
 print("Codul de stare (ex.3): ", response3.status_code)
-print()
+print("---------4----------")
 
 time.sleep(1)
 
-# Exercitiul 4
 import urllib.request
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -52,16 +47,14 @@ with urllib.request.urlopen(req, timeout=TIMEOUT) as response:
 
 print("Primele 200 de caractere: ", content_text[:200])
 time.sleep(1)
-print()
-
-# Exercitiul 5
+print("---------5----------")
 
 print(dir(requests))
 
 stasik = dir(requests)
 print()
 print(f"stasik = {stasik}")
-print()
+print("---------6----------")
 
 # Am ales 3 nume din rezultatul funcției dir(requests):
 #
@@ -78,23 +71,22 @@ print()
 # Exercitiul 6
 response6 = requests.get(BASE_URL, timeout=5)
 print("Cod de stare (Stil 6): ", response6.status_code)
-print()
+print("---------7----------")
 
-
-# Exercitiul 7
 time1 = time.perf_counter()
 print("Time 1 = ", time1)
 response7 = requests.get(BASE_URL, timeout=TIMEOUT)
 time2 = time.perf_counter()
 print("Time 2 = ", time2)
 print(response7.elapsed)
-print()
+print("---------8----------")
 
-# Exercitiul 8
 try :
     import bs4
 except:
     print("Instalați modulul cu: pip install beautifulsoup4")
 
-#print(bs4.__file__)
+print(bs4.__file__)
+print("--------------------")
+
 
