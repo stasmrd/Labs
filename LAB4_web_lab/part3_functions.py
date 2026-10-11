@@ -60,5 +60,55 @@ def get_title():
 
 help(get_title)
 print("---------26----------")
+
 # get_status(123)
+print("Type Error")
+# Adnotarile de tip nu blocheaza codul. Eroarea apare de la requests.get(),
+# pentru ca a primit un numar in loc de un URL de tip text
 print("---------27----------")
+
+def page_exists(url):
+    print("url = ", url)
+    try:
+        requests.get(url, timeout=TIMEOUT)
+    except requests.RequestException:
+        return False
+    return True
+
+print(page_exists("https://this-domain-does-not-exist.invalid"))
+print("---------28----------")
+
+paths = ["/", "/robots.txt", "/sitemap.xml"]
+def check_paths(base, paths):
+    dict_paths = {}
+    for path in paths:
+        full_paths = base + path
+        resp = requests.get(full_paths)
+        status_code = response.status_code
+        dict_paths[path] = status_code
+    print(dict_paths)
+    return response.status_code
+
+check_paths(BASE_URL,paths)
+print("---------29----------")
+
+def get_header(url, name , default = "Lipseste"):
+    resp = requests.get(url, timeout=TIMEOUT)
+    hdr = resp.headers.get(name, default)
+    print(hdr)
+    return None
+
+get_header(BASE_URL, name = "Server")
+print("---------30----------")
+
+
+
+
+
+
+
+
+
+
+
+
