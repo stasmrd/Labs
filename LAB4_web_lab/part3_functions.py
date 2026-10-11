@@ -129,4 +129,62 @@ def score_headers(results):
 
 result_sh = score_headers(security_headers(BASE_URL))
 print(result_sh)
+print("---------32----------")
 
+def fetch_robots(base):
+    fisier = "/robots.txt"
+    resp = requests.get(base + fisier, timeout=TIMEOUT)
+    text = resp.text
+    print(resp.status_code)
+    if resp.status_code == 200:
+        return text
+    else:
+        return None
+
+def disallowed_paths(robots_text):
+    if robots_text is None:
+        return []
+
+    paths = []
+    for line in robots_text.splitlines():
+        line = line.strip()
+        if line.lower().startswith("disallow:"):
+            path = line.split(":", 1)[1].strip()
+            if path:
+                paths.append(path)
+
+    return paths
+
+text_robots = fetch_robots(ECHO_URL)
+lista_cai = disallowed_paths(text_robots)
+print(text_robots)
+print(lista_cai)
+# Am folosit ECHO_URL in functia fetch_robots deoarece la BASE_URL nu exista Disallow.
+print("----------33----------")
+
+def response_times(*urls):
+    dict_urls = {}
+    for url in urls:
+        resp = requests.get(url, timeout=TIMEOUT)
+        sec = resp.elapsed.total_seconds()
+        dict_urls[url] = sec
+    return dict_urls
+
+print(response_times(BASE_URL, ECHO_URL))
+print("---------34----------")
+
+def log(message, **details):
+    parts = [message]
+    for key, value in details.items():
+        parts.append(f"{key}={value}")
+    result = "  |  ".join(parts)
+    return result
+
+print(log("verificat", url=BASE_URL, status=200))
+
+# print() doar afiseaza informatia pe ecran pentru
+# a o putea vedea tu, dar nu o pastreaza in cod,dar
+# return trimite valoarea inapoi in program, ceea ce
+# iti permite sa o salvezi intr-o variabila si sa o folosesti
+# mai departe in alte calcule sau functii.
+print("---------35----------")
