@@ -8,6 +8,7 @@ ECHO_URL = "https://httpbin.org"
 TIMEOUT = 10  # secunde
 
 import re
+import requests
 from urllib.parse import urlparse , urljoin
 
 print("---------35----------")
@@ -46,3 +47,63 @@ html_exemplu = """<a href="https://cybercor.org/#servicii">Servicii</a>
 print("Extragerea legaturilor:",extract_links(html_exemplu))
 print("---------38---------")
 
+def split_links(links, domain):
+    lst_in = []
+    lst_ex = []
+    for link in links:
+        if domain in link:
+            lst_in.append(link)
+        else:
+            lst_ex.append(link)
+    return lst_in, lst_ex
+
+lnk = ["https://cybercor.org", "https://cybercor.org/home", "https://pwn.college/dojos", "https://google.com"]
+dmn = "https://google.com"
+
+print(split_links(lnk, dmn))
+print("---------39---------")
+
+from html.parser import HTMLParser
+
+
+class ImageFinder(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.images = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag.lower() == "img":
+            src = dict(attrs).get("src")
+            if src:
+                self.images.append(src)
+
+
+test_html = """
+<html><body>
+  <img src="/logo.png" alt="Logo">
+  <IMG SRC="poza.jpg">
+  <img alt="imagine fără src">
+  <img src="https://cdn.example.com/banner.webp" />
+  <a href="/despre">Aceasta nu este o imagine</a>
+</body></html>
+"""
+
+finder = ImageFinder()
+finder.feed(test_html)
+print(finder.images)
+
+assert finder.images == [
+    "/logo.png",  # imagine obișnuită
+    "poza.jpg",  # tag scris cu majuscule
+    "https://cdn.example.com/banner.webp",  # tag care se închide singur
+], "Parserul nu a găsit exact imaginile așteptate"
+print("Testul a trecut!")
+
+response = requests.get(BASE_URL, timeout=TIMEOUT)
+finder = ImageFinder()
+finder.feed(response.text)
+print(len(finder.images), "imagini găsite")
+for src in finder.images:
+    print(src)
+
+print("---------40---------")
