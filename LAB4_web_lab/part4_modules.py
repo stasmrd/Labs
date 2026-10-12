@@ -8,7 +8,7 @@ ECHO_URL = "https://httpbin.org"
 TIMEOUT = 10  # secunde
 
 
-from urllib.parse import urlparse
+from urllib.parse import urlparse , urljoin
 
 print("---------35----------")
 
@@ -25,4 +25,15 @@ def urllib_parse_urlparse():
 
 urllib_parse_urlparse()
 print("---------36---------")
+
+def urllib_parse_urljoin():
+    relatives = ["/about", "contact.html", "../index.html"]
+    print("Compunere URL:\n",urljoin(BASE_URL, relatives[0]))
+    print(urljoin(BASE_URL, relatives[1]))
+    print(urljoin(BASE_URL, relatives[2]))
+    return relatives
+
+urllib_parse_urljoin()
+print("---------37---------")
+
 
