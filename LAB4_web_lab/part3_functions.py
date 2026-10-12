@@ -187,4 +187,6 @@ print(log("verificat", url=BASE_URL, status=200))
 # return trimite valoarea inapoi in program, ceea ce
 # iti permite sa o salvezi intr-o variabila si sa o folosesti
 # mai departe in alte calcule sau functii.
-print("---------35----------")
+print("---------------------")
+
+

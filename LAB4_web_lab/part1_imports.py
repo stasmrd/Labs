@@ -16,19 +16,19 @@ print("Versiunea requests: ", requests.__version__)
 print("---------1----------")
 
 response1 = requests.get(BASE_URL, timeout=TIMEOUT)
-print("Codul de stare (Stil 1): ", response1.status_code)
+print("Codul de stare: ", response1.status_code)
 print("---------2----------")
 
 time.sleep(1)
 
 from requests import get 
 response2 = get(BASE_URL, timeout=TIMEOUT)
-print("Codul de stare (Stil 2): ", response2.status_code)
+print("Codul de stare: ", response2.status_code)
 print("---------3----------")
 
 import requests as rq
 response3 = rq.get(BASE_URL, timeout=TIMEOUT)
-print("Codul de stare (ex.3): ", response3.status_code)
+print("Codul de stare: ", response3.status_code)
 print("---------4----------")
 
 time.sleep(1)
@@ -51,9 +51,9 @@ print("---------5----------")
 
 print(dir(requests))
 
-stasik = dir(requests)
+dir_req = dir(requests)
 print()
-print(f"stasik = {stasik}")
+print(f"Dir Request: = {dir_req}")
 print("---------6----------")
 
 # Am ales 3 nume din rezultatul funcției dir(requests):
@@ -70,7 +70,7 @@ print("---------6----------")
 
 # Exercitiul 6
 response6 = requests.get(BASE_URL, timeout=5)
-print("Cod de stare (Stil 6): ", response6.status_code)
+print("Cod de stare: ", response6.status_code)
 print("---------7----------")
 
 time1 = time.perf_counter()
