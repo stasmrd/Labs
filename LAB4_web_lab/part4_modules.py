@@ -1,13 +1,14 @@
 # Laborator Python: funcții, metode și importuri pe web
 # Student: Mardari Stanislav
 # Grupa academica : SI-261
-
+import hashlib
 
 BASE_URL = "https://cybercor.org"
 ECHO_URL = "https://httpbin.org"
 TIMEOUT = 10  # secunde
 
 import re
+import time
 import requests
 from urllib.parse import urlparse , urljoin
 
@@ -107,3 +108,17 @@ for src in finder.images:
     print(src)
 
 print("---------40---------")
+
+def page_fingerprint(url):
+    resp = requests.get(url, timeout=TIMEOUT)
+    return hashlib.sha256(resp.content).hexdigest()
+
+print(page_fingerprint("https://www.bbc.com/news"))
+time.sleep(30)
+print(page_fingerprint("https://www.bbc.com/news"))
+# Rezultate vor fi diferite in cazul cand site-ul respectiv se actualizeaza
+# intr-un timp foarte scurt si cand folosim functia la o anumita distanta de timp,
+# de dorit mai mare ca 1, in dependenta de site.
+
+print("---------41---------")
+
