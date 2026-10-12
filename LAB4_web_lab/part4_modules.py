@@ -155,3 +155,4 @@ def cert_days_left(hostname):
 
 print("Au ramas: ", cert_days_left("cybercor.org")," zile.")
 print("---------44---------")
+
