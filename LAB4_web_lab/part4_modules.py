@@ -2,6 +2,8 @@
 # Student: Mardari Stanislav
 # Grupa academica : SI-261
 import hashlib
+import socket
+import ssl
 
 BASE_URL = "https://cybercor.org"
 ECHO_URL = "https://httpbin.org"
@@ -10,6 +12,7 @@ TIMEOUT = 10  # secunde
 import re
 import time
 import requests
+import json
 from urllib.parse import urlparse , urljoin
 
 print("---------35----------")
@@ -114,11 +117,41 @@ def page_fingerprint(url):
     return hashlib.sha256(resp.content).hexdigest()
 
 print(page_fingerprint("https://www.bbc.com/news"))
-time.sleep(30)
+time.sleep(1)
 print(page_fingerprint("https://www.bbc.com/news"))
 # Rezultate vor fi diferite in cazul cand site-ul respectiv se actualizeaza
 # intr-un timp foarte scurt si cand folosim functia la o anumita distanta de timp,
 # de dorit mai mare ca 1, in dependenta de site.
 
 print("---------41---------")
+file = "file_test.txt"
+response = requests.get(BASE_URL, timeout=TIMEOUT)
+with open(file, "w") as f:
+    json.dump(dict(response.headers), f, indent=2)
 
+with open(file, "r") as f:
+    loaded_headers = json.load(f)
+print("Content-Type:", loaded_headers.get("Content-Type"))
+print("---------42---------")
+
+def resolve(hostname):
+    return socket.gethostbyname(hostname)
+
+print("IP: ", resolve("cybercor.org"))
+print("---------43---------")
+
+
+def cert_days_left(hostname):
+    context = ssl.create_default_context()
+    with socket.create_connection((hostname, 443)) as sock:
+        with context.wrap_socket(sock, server_hostname=hostname) as ssock:
+            cert = ssock.getpeercert()
+            not_after = cert["notAfter"]
+            expiration_time = ssl.cert_time_to_seconds(not_after)
+            current_time = time.time()
+            seconds_left = expiration_time - current_time
+            days_left = seconds_left / (60 * 60 * 24)
+            return int(days_left)
+
+print("Au ramas: ", cert_days_left("cybercor.org")," zile.")
+print("---------44---------")
