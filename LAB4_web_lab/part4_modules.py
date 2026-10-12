@@ -7,7 +7,7 @@ BASE_URL = "https://cybercor.org"
 ECHO_URL = "https://httpbin.org"
 TIMEOUT = 10  # secunde
 
-
+import re
 from urllib.parse import urlparse , urljoin
 
 print("---------35----------")
@@ -31,9 +31,18 @@ def urllib_parse_urljoin():
     print("Compunere URL:\n",urljoin(BASE_URL, relatives[0]))
     print(urljoin(BASE_URL, relatives[1]))
     print(urljoin(BASE_URL, relatives[2]))
-    return relatives
+    return list(set(relatives))
 
 urllib_parse_urljoin()
 print("---------37---------")
 
+def extract_links(html):
+    legaturi = re.findall(r'href="([^"]+)"', html)
+    return legaturi
+
+html_exemplu = """<a href="https://cybercor.org/#servicii">Servicii</a>
+                    <a href="https://pwn.college/dojos">Dojos</a> """
+
+print("Extragerea legaturilor:",extract_links(html_exemplu))
+print("---------38---------")
 
